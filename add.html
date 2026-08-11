@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UyTop - Uy qo‘shish</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body { font-family:'Roboto',sans-serif; margin:0; background:linear-gradient(135deg,#f0f4ff,#e1f0ff); display:flex; justify-content:center; align-items:center; min-height:100vh; }
+.container { background:white; padding:40px; border-radius:25px; box-shadow:0 15px 40px rgba(0,0,0,0.2); width:100%; max-width:500px; }
+h2 { color:#2b7cff; text-align:center; margin-bottom:30px; }
+input, textarea, button { width:100%; padding:15px; margin-bottom:15px; border-radius:12px; border:1px solid #ccc; font-size:16px; box-sizing:border-box; }
+input:focus, textarea:focus { border-color:#2b7cff; outline:none; box-shadow:0 0 10px rgba(43,124,255,0.3); }
+button { background:linear-gradient(90deg,#2b7cff,#4aa0ff); color:white; border:none; cursor:pointer; font-weight:500; transition:0.3s; }
+button:hover { transform:translateY(-2px); box-shadow:0 6px 12px rgba(43,124,255,0.4); }
+p a { color:#2b7cff; text-decoration:none; font-weight:500;}
+p a:hover { text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Uy qo‘shish</h2>
+<input type="text" id="title" placeholder="Uy nomi / sarlavhasi">
+<input type="text" id="location" placeholder="Manzil">
+<input type="number" id="price" placeholder="Narx (so‘m)">
+<textarea id="description" placeholder="Qo‘shimcha ma’lumot" rows="4"></textarea>
+<input type="file" id="image" accept="image/*">
+<button id="addBtn">Qo‘shish</button>
+<p style="margin-top:15px;"><a href="index.html">⬅ Orqaga</a></p>
+<p id="msg" style="margin-top:10px; font-weight:500; color:#333;"></p>
+</div>
+
+<script>
+let currentUser = JSON.parse(localStorage.getItem("uytop_user"));
+if(!currentUser){
+    alert("Iltimos, avval login qiling!");
+    window.location.href="login.html";
+}
+
+document.getElementById("addBtn").addEventListener("click", function(){
+    let title = document.getElementById("title").value.trim();
+    let location = document.getElementById("location").value.trim();
+    let price = parseInt(document.getElementById("price").value.trim());
+    let description = document.getElementById("description").value.trim();
+    let imageInput = document.getElementById("image");
+
+    if(!title  !location  !price){
+        alert("Iltimos, sarlavha, manzil va narxni kiriting!");
+        return;
+    }
+
+    let reader = new FileReader();
+    reader.onload = function(){
+        let imgData = reader.result;
+        let listings = JSON.parse(localStorage.getItem("uytop_listings")) || [];
+        let id = Date.now(); // Unikal ID
+        listings.push({id, title, location, price, description, image: imgData, owner: currentUser.name});
+        localStorage.setItem("uytop_listings", JSON.stringify(listings));
+        document.getElementById("msg").innerText = "✅ Uy muvaffaqiyatli qo‘shildi!";
+        document.getElementById("title").value="";
+        document.getElementById("location").value="";
+        document.getElementById("price").value="";
+        document.getElementById("description").value="";
+        document.getElementById("image").value="";
+    };
+
+    if(imageInput.files[0]){
+        reader.readAsDataURL(imageInput.files[0]);
+    } else {
+        // Agar rasm yuklanmasa, null qiymat beriladi
+        let listings = JSON.parse(localStorage.getItem("uytop_listings")) || [];
+        let id = Date.now();
+        listings.push({id, title, location, price, description, image: null, owner: currentUser.name});
+        localStorage.setItem("uytop_listings", JSON.stringify(listings));
+        document.getElementById("msg").innerText = "✅ Uy muvaffaqiyatli qo‘shildi!";
+        document.getElementById("title").value="";
+        document.getElementById("location").value="";
+        document.getElementById("price").value="";
+        document.getElementById("description").value="";
+    }
+});
+</script>
+
+</body>
+</html>
