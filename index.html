@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joylash — Uy-joy platformasi</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header"><div class="container nav">
+<a class="logo" href="index.html">Joy<span>lash</span></a>
+<nav><a href="index.html" class="active">Bosh sahifa</a><a href="listing.html">E'lonlar</a><a href="add.html">E'lon joylash</a><a href="login.html" id="authLink">Kirish</a></nav>
+</div></header>
+<section class="hero"><div class="container hero-grid">
+<div><div class="badge">🇺🇿 Butun O‘zbekiston bo‘yicha</div><h1>Orzuingizdagi uyni <span>Joylash</span> bilan toping</h1>
+<p>Sotuv va ijara uchun uy-joy e’lonlarini qulay qidiring yoki o‘zingizning e’loningizni joylang.</p>
+<div class="hero-buttons"><a class="btn primary" href="listing.html">E'lonlarni ko‘rish</a><a class="btn secondary" href="add.html">+ E'lon joylash</a></div></div>
+<div class="search-card"><h3>Uy qidirish</h3><form action="listing.html" method="get"><input name="q" placeholder="Masalan: 3 xonali kvartira">
+<select name="type"><option value="">Sotuv yoki ijara</option><option>Sotiladi</option><option>Ijaraga beriladi</option></select>
+<select name="region"><option value="">Viloyatni tanlang</option><option>Toshkent shahri</option><option>Toshkent viloyati</option><option>Samarqand</option><option>Buxoro</option><option>Farg‘ona</option><option>Andijon</option><option>Namangan</option><option>Xorazm</option><option>Qashqadaryo</option><option>Surxondaryo</option><option>Navoiy</option><option>Jizzax</option><option>Sirdaryo</option><option>Qoraqalpog‘iston</option></select><button class="btn primary full">Qidirish</button></form></div>
+</div></section>
+<section class="section"><div class="container"><div class="section-head"><div><p class="eyebrow">Tanlangan e’lonlar</p><h2>Yangi e’lonlar</h2></div><a href="listing.html">Barchasini ko‘rish →</a></div><div id="homeListings" class="cards"></div></div></section>
+<footer>© 2026 Joylash. Uy-joy topishning qulay usuli.</footer>
+<script src="script.js"></script><script>renderListings('homeListings',3);</script>
+</body></html>
